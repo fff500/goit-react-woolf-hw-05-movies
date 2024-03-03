@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/337.d9ecf70e.chunk.js","mappings":"iKAQA,UANc,WACZ,OACEA,EAAAA,EAAAA,KAAA,OAAAC,SAAK,SAET,C","sources":["pages/Movie/Movie.jsx"],"sourcesContent":["import React from 'react'\n\nconst Movie = () => {\n  return (\n    <div>Movie</div>\n  )\n}\n\nexport default Movie"],"names":["_jsx","children"],"sourceRoot":""}

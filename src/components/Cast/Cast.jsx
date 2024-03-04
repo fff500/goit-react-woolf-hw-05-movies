@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
-import { getMovieCredits } from "api/themoviedb-api";
+import { getMovieCredits } from 'api/themoviedb-api';
 
 const Cast = () => {
   const [cast, setCast] = useState();

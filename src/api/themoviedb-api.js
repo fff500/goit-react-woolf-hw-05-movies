@@ -22,3 +22,7 @@ export const getMovieCredits = async movieId => {
 export const getMovieReviews = async movieId => {
   return await axios.get(`/movie/${movieId}/reviews`);
 };
+
+export const getMoviesByKeyWord = async keyWord => {
+  return await axios.get(`/search/movie?query=${keyWord}`);
+};

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 
 import { getMovie } from "api/themoviedb-api";
 import { BASE_API_URL } from 'constants/constants';
@@ -58,6 +58,17 @@ const MovieDetails = () => {
           </div>
         </div>
       </div>)}
+      <div>
+        <p>Additional information</p>
+        <ul className={'navList'}>
+          <li>
+            <Link to={'cast'} className={'styles.navLink'}>Cast</Link>
+          </li>
+          <li>
+            <Link to={'reviews'} className={'styles.navLink'}>Reviews</Link>
+          </li>
+        </ul>
+      </div>
       <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>

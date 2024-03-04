@@ -5,7 +5,7 @@ import { getMovie } from "api/themoviedb-api";
 import { BASE_API_URL } from 'constants/constants';
 
 const MovieDetails = () => {
-  const [movieDetails, setMovieDetails] = useState({});
+  const [movieDetails, setMovieDetails] = useState();
   const { movieId } = useParams();
 
   useEffect(() => {
@@ -30,36 +30,34 @@ const MovieDetails = () => {
 
   }, [movieId])
 
-  const { title, popularity, overview, genres, posterSrc, releasYear } = movieDetails;
-
   console.log(movieDetails);
 
   return (
     <>
-      <div>
+      {movieDetails && (<div>
         <button>Go back</button>
         <div>
           <div>
-            <img src={posterSrc} alt={`${title} poster`} />
+            <img src={movieDetails.posterSrc} alt={`${movieDetails.title} poster`} />
           </div>
           <div>
-            <h1>{`${title} (${releasYear})`}</h1>
-            <p>User score: {popularity}</p>
+            <h1>{`${movieDetails.title} (${movieDetails.releasYear})`}</h1>
+            <p>User score: {movieDetails.popularity}</p>
             <div>
               <h2>Overview</h2>
-              <p>{overview}</p>
+              <p>{movieDetails.overview}</p>
             </div>
             <div>
               <h3>Genres</h3>
               <ul>
-                {genres.map(({ id, name }) => {
+                {movieDetails.genres.map(({ id, name }) => {
                   return <li key={id}>{name}</li>
                 })}
               </ul>
             </div>
           </div>
         </div>
-      </div>
+      </div>)}
       <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>

@@ -7,7 +7,8 @@ import { BASE_IMAGE_URL, DEFAULT_ERROR_MESSAGE } from 'constants/constants';
 import style from './Cast.module.css';
 
 const Cast = () => {
-  const [cast, setCast] = useState(null);
+  const [cast, setCast] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { movieId } = useParams();
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const Cast = () => {
 
   return (
     <>
-      {cast && (
+      {!!cast.length && (
         <ul>
           {cast.map(({ id, name, character, profile_path }) => (
             <li key={id} className={style.item}>
@@ -41,6 +42,11 @@ const Cast = () => {
             </li>
           ))}
         </ul>
+      )}
+      {!isLoading && !cast.length && (
+        <div style={{ marginTop: '16px' }}>
+          We don't have any cast for this movie.
+        </div>
       )}
     </>
   );

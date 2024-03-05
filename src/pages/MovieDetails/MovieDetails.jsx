@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { getMovie } from 'api/themoviedb-api';
 import { BASE_IMAGE_URL, DEFAULT_ERROR_MESSAGE } from 'constants/constants';
@@ -11,6 +11,9 @@ const MovieDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { movieId } = useParams();
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleLoadMovie = async (movieId) => {
@@ -46,12 +49,16 @@ const MovieDetails = () => {
 
   }, [movieId])
 
+  const handleBackButtonClick = () => {
+    navigate(location.state ?? '/home');
+  }
+
   return (
     <>
       {isLoading && <div>Loading...</div>}
       {!isLoading && movieDetails && (
         <div>
-          <button>Go back</button>
+          <button onClick={handleBackButtonClick}>&larr; Go back</button>
           <div className={style.detailsContainer}>
             <div className={style.imageContainer}>
               <img

@@ -14,7 +14,6 @@ const Cast = () => {
     const handleLoadMovieCast = async (movieId) => {
       try {
         const { data: { cast } } = await getMovieCredits(movieId);
-
         setCast(cast);
       } catch (error) {
         alert(error.message || DEFAULT_ERROR_MESSAGE);
@@ -22,8 +21,7 @@ const Cast = () => {
     }
 
     handleLoadMovieCast(movieId);
-
-  }, [movieId])
+  }, [movieId]);
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { getMovieReviews } from 'api/themoviedb-api';
@@ -12,11 +12,9 @@ const Reviews = () => {
 
   useEffect(() => {
     const handleLoadMovieReviews = async (movieId) => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
-
         const { data: { results } } = await getMovieReviews(movieId);
-
         setReviews(results);
       } catch (error) {
         alert(error.message || DEFAULT_ERROR_MESSAGE);
@@ -47,4 +45,4 @@ const Reviews = () => {
   )
 }
 
-export default Reviews
+export default Reviews;

@@ -19,10 +19,9 @@ const Movies = () => {
 
   const handleSearch = async (event) => {
     event.preventDefault();
-
+    setIsSearchDone(false);
+    setIsLoading(true);
     try {
-      setIsSearchDone(false);
-      setIsLoading(true);
       const query = event.target.elements[0].value.trim().toLowerCase();
       const { data: { results } } = await getMoviesByKeyWord(query);
       setSearchParams({ query });
@@ -38,9 +37,7 @@ const Movies = () => {
   }
 
   useEffect(() => {
-    if (query) {
-      setSearchResults(JSON.parse(sessionStorage.getItem(query)));
-    }
+    query && setSearchResults(JSON.parse(sessionStorage.getItem(query)));
   }, [query]);
 
   return (
@@ -62,7 +59,7 @@ const Movies = () => {
           ))}
         </ul>
       )}
-      {isSearchDone && !searchResults.length && 'Sorry! No movies were found'}
+      {isSearchDone && !searchResults.length && 'Sorry! No movies were found.'}
     </div>
   )
 };

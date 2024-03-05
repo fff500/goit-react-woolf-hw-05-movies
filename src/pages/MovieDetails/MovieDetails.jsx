@@ -16,14 +16,14 @@ const MovieDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleLoadMovie = async (movieId) => {
+    const handleLoadMovieDetails = async (movieId) => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const { data: {
           original_title,
           title,
           name,
-          popularity,
+          vote_average,
           overview,
           genres,
           poster_path,
@@ -32,7 +32,7 @@ const MovieDetails = () => {
 
         setMovieDetails({
           title: title || name || original_title,
-          popularity,
+          score: vote_average,
           overview,
           genres,
           posterSrc: `${BASE_IMAGE_URL}/w500${poster_path}`,
@@ -45,7 +45,7 @@ const MovieDetails = () => {
       }
     }
 
-    handleLoadMovie(movieId);
+    handleLoadMovieDetails(movieId);
 
   }, [movieId])
 
@@ -69,7 +69,7 @@ const MovieDetails = () => {
             </div>
             <div>
               <h1>{`${movieDetails.title} (${movieDetails.releasYear})`}</h1>
-              <p>User score: {movieDetails.popularity}</p>
+              <p>User score: {movieDetails.score}</p>
               <div>
                 <h2>Overview</h2>
                 <p>{movieDetails.overview}</p>

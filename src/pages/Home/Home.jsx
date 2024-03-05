@@ -11,10 +11,8 @@ const Home = () => {
   useEffect(() => {
     const handleLoadTrendingMovies = async () => {
       setIsLoading(true);
-
       try {
         const { data: { results } } = await getTrendingMovies();
-
         setTrendingMovies(results);
       } catch (error) {
         alert(error.message || DEFAULT_ERROR_MESSAGE);
@@ -45,4 +43,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;

@@ -1,5 +1,11 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 
 import { getMovie } from 'api/themoviedb-api';
 import { BASE_IMAGE_URL, DEFAULT_ERROR_MESSAGE } from 'constants/constants';
@@ -16,19 +22,21 @@ const MovieDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleLoadMovieDetails = async (movieId) => {
+    const handleLoadMovieDetails = async movieId => {
       setIsLoading(true);
       try {
-        const { data: {
-          original_title,
-          title,
-          name,
-          vote_average,
-          overview,
-          genres,
-          poster_path,
-          release_date
-        } } = await getMovie(movieId);
+        const {
+          data: {
+            original_title,
+            title,
+            name,
+            vote_average,
+            overview,
+            genres,
+            poster_path,
+            release_date,
+          },
+        } = await getMovie(movieId);
 
         setMovieDetails({
           title: title || name || original_title,
@@ -43,15 +51,14 @@ const MovieDetails = () => {
       } finally {
         setIsLoading(false);
       }
-    }
+    };
 
     handleLoadMovieDetails(movieId);
-
-  }, [movieId])
+  }, [movieId]);
 
   const handleBackButtonClick = () => {
-    navigate(location.state ?? '/home');
-  }
+    navigate(location.state ?? '/');
+  };
 
   return (
     <>
@@ -77,7 +84,9 @@ const MovieDetails = () => {
               <div>
                 <h3>Genres</h3>
                 <ul className={style.genresList}>
-                  {movieDetails.genres.map(({ id, name }) => <li key={id}>{name}</li>)}
+                  {movieDetails.genres.map(({ id, name }) => (
+                    <li key={id}>{name}</li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -100,7 +109,7 @@ const MovieDetails = () => {
         <Outlet />
       </Suspense>
     </>
-  )
-}
+  );
+};
 
 export default MovieDetails;

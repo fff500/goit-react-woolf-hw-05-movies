@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
-import { MovieLink } from 'components/MovieLink/MovieLink';
-import { getMoviesByKeyWord } from 'api/themoviedb-api';
+import { MoviesList } from 'components/MoviesList/MoviesList';
+import { SearchForm } from 'components/SearchForm/SearchForm';
 import { DEFAULT_ERROR_MESSAGE } from 'constants/constants';
-
-import style from './Movies.module.css';
+import { getMoviesByKeyWord } from 'api/themoviedb-api';
 
 const Movies = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -17,51 +16,36 @@ const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
 
-  const handleSearch = async (event) => {
-    event.preventDefault();
-    setIsSearchDone(false);
-    setIsLoading(true);
-    try {
-      const query = event.target.elements[0].value.trim().toLowerCase();
-      const { data: { results } } = await getMoviesByKeyWord(query);
-      setSearchParams({ query });
-      setSearchResults(results);
-      sessionStorage.setItem(query, JSON.stringify(results));
-      event.target.elements[0].value = '';
-    } catch (error) {
-      alert(error.message || DEFAULT_ERROR_MESSAGE);
-    } finally {
-      setIsLoading(false);
-      setIsSearchDone(true);
-    }
-  }
-
   useEffect(() => {
-    query && setSearchResults(JSON.parse(sessionStorage.getItem(query)));
+    const handleSearch = async () => {
+      setIsSearchDone(false);
+      setIsLoading(true);
+      try {
+        const {
+          data: { results },
+        } = await getMoviesByKeyWord(query);
+        setSearchResults(results);
+      } catch (error) {
+        alert(error.message || DEFAULT_ERROR_MESSAGE);
+      } finally {
+        setIsLoading(false);
+        setIsSearchDone(true);
+      }
+    };
+
+    query && handleSearch();
   }, [query]);
 
   return (
     <div>
-      <form onSubmit={handleSearch} className={style.form}>
-        <input type="text" name="query" required />
-        <button type="submit">Search</button>
-      </form>
+      <SearchForm onSubmit={setSearchParams} />
       {isLoading && <div>Loading...</div>}
       {!isLoading && !!searchResults.length && (
-        <ul>
-          {searchResults.map(({ id, title, name, original_name }) => (
-            <MovieLink
-              key={id}
-              text={title || name || original_name}
-              to={`/movies/${id}`}
-              state={location}
-            />
-          ))}
-        </ul>
+        <MoviesList movies={searchResults} state={location} />
       )}
       {isSearchDone && !searchResults.length && 'Sorry! No movies were found.'}
     </div>
-  )
+  );
 };
 
 export default Movies;

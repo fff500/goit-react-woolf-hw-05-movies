@@ -6,7 +6,7 @@ import { App } from 'App';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
+  <BrowserRouter basename="/goit-react-woolf-hw-05-movies">
     <App />
   </BrowserRouter>
 );

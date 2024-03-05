@@ -7,24 +7,26 @@ import { BASE_IMAGE_URL, DEFAULT_ERROR_MESSAGE } from 'constants/constants';
 import style from './Cast.module.css';
 
 const Cast = () => {
-  const [cast, setCast] = useState();
+  const [cast, setCast] = useState(null);
   const { movieId } = useParams();
 
   useEffect(() => {
-    const handleLoadMovieCast = async (movieId) => {
+    const handleLoadMovieCast = async movieId => {
       try {
-        const { data: { cast } } = await getMovieCredits(movieId);
+        const {
+          data: { cast },
+        } = await getMovieCredits(movieId);
         setCast(cast);
       } catch (error) {
         alert(error.message || DEFAULT_ERROR_MESSAGE);
       }
-    }
+    };
 
     handleLoadMovieCast(movieId);
   }, [movieId]);
 
   return (
-    <div>
+    <>
       {cast && (
         <ul>
           {cast.map(({ id, name, character, profile_path }) => (
@@ -40,8 +42,8 @@ const Cast = () => {
           ))}
         </ul>
       )}
-    </div>
-  )
-}
+    </>
+  );
+};
 
 export default Cast;

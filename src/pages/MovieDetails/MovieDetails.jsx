@@ -2,7 +2,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 
 import { getMovie } from 'api/themoviedb-api';
-import { DEFAULT_ERROR_MESSAGE } from 'constants/constants';
+import { BASE_IMAGE_URL, DEFAULT_ERROR_MESSAGE } from 'constants/constants';
 
 import style from './MovieDetails.module.css';
 
@@ -32,7 +32,7 @@ const MovieDetails = () => {
           popularity,
           overview,
           genres,
-          posterSrc: poster_path,
+          posterSrc: `${BASE_IMAGE_URL}/w500${poster_path}`,
           releasYear: release_date.substring(0, 4),
         });
       } catch (error) {
@@ -54,7 +54,11 @@ const MovieDetails = () => {
           <button>Go back</button>
           <div className={style.detailsContainer}>
             <div className={style.imageContainer}>
-              <img src={movieDetails.posterSrc} alt={`${movieDetails.title} poster`} />
+              <img
+                src={movieDetails.posterSrc}
+                alt={`${movieDetails.title} poster`}
+                className={style.image}
+              />
             </div>
             <div>
               <h1>{`${movieDetails.title} (${movieDetails.releasYear})`}</h1>

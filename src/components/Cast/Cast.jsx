@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { getMovieCredits } from 'api/themoviedb-api';
-import { DEFAULT_ERROR_MESSAGE } from 'constants/constants';
+import { BASE_IMAGE_URL, DEFAULT_ERROR_MESSAGE } from 'constants/constants';
+
+import style from './Cast.module.css';
 
 const Cast = () => {
   const [cast, setCast] = useState();
@@ -28,8 +30,12 @@ const Cast = () => {
       {cast && (
         <ul>
           {cast.map(({ id, name, character, profile_path }) => (
-            <li key={id}>
-              <img src={profile_path} alt="Actress / actor" />
+            <li key={id} className={style.item}>
+              <img
+                src={`${BASE_IMAGE_URL}/w500${profile_path}`}
+                alt="Actress / actor"
+                className={style.image}
+              />
               <p>{name}</p>
               <p>{character}</p>
             </li>

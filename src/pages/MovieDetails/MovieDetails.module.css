@@ -1,11 +1,16 @@
 .detailsContainer {
   display: flex;
   gap: 24px;
-  margin-top: 24px;
+  padding: 24px 0;
 }
 
 .imageContainer {
-  width: 300px;
+  width: 500px;
+}
+
+.image {
+  display: block;
+  width: 100%;
 }
 
 .genresList {

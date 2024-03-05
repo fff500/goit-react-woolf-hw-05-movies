@@ -13,6 +13,7 @@ const Cast = () => {
 
   useEffect(() => {
     const handleLoadMovieCast = async movieId => {
+      setIsLoading(true);
       try {
         const {
           data: { cast },
@@ -20,6 +21,8 @@ const Cast = () => {
         setCast(cast);
       } catch (error) {
         alert(error.message || DEFAULT_ERROR_MESSAGE);
+      } finally {
+        setIsLoading(false);
       }
     };
 

@@ -8,7 +8,11 @@ import {
 } from 'react-router-dom';
 
 import { getMovie } from 'api/themoviedb-api';
-import { BASE_IMAGE_URL, DEFAULT_ERROR_MESSAGE } from 'constants/constants';
+import {
+  BASE_IMAGE_URL,
+  DEFAULT_ERROR_MESSAGE,
+  DEFAULT_IMAGE_URL,
+} from 'constants/constants';
 
 import style from './MovieDetails.module.css';
 
@@ -43,7 +47,9 @@ const MovieDetails = () => {
           score: vote_average,
           overview,
           genres,
-          posterSrc: `${BASE_IMAGE_URL}/w500${poster_path}`,
+          posterSrc: poster_path
+            ? `${BASE_IMAGE_URL}/w500${poster_path}`
+            : DEFAULT_IMAGE_URL,
           releasYear: release_date.substring(0, 4),
         });
       } catch (error) {
